@@ -1,32 +1,32 @@
+const axios = require('axios');
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
 const port = 5000;
+const distDir = path.join(__dirname + '/../dist/sikfliks/');
 
-const data = [
-  {
-    id: 1,
-    firstName: "Amy",
-    lastName: "Taylor",
-    phone: "617-564-3254",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/amy_taylor.jpg"
-  },
-  {
-    id: 2,
-    firstName: "Anup",
-    lastName: "Gupta",
-    phone: "617-564-1258",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/anup_gupta.jpg"
-  }
-];
-
-app.get('/api/employees', (req, res) => {
-  res.json(data);
+app.get('/api/insta', (req, res) => {
+  axios({
+    'method': 'GET',
+    'url': 'https://instagram9.p.rapidapi.com/api/instagram',
+    'headers': {
+      'x-rapidapi-host': 'instagram9.p.rapidapi.com',
+      'x-rapidapi-key': '54a294317fmshe35a8c50b0f82c2p100a2cjsn4d6d671f8a71'
+    }, 'params': {
+      'kullaniciadi': 'nasa',
+      'lang': 'en'
+    }
+  }).then((response) => {
+    console.log(response.data);
+    res.json(response.data);
+  }).catch((error) => {
+    console.error(error);
+    next(error);
+  });
 });
 
-app.get('*', (req, res) => {
-  res.send('hello world');
-});
+app.use(express.static(distDir));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

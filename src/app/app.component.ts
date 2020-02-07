@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { BackendService } from './backend.service';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +9,12 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   employees: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private backendService: BackendService) { }
 
   ngOnInit() {
-    this.getData().subscribe(employees => {
-      console.log(employees);
+    this.backendService.getInstaData().subscribe((employees) => {
       this.employees = employees;
     });
-  }
-
-  getData() {
-    return this.http.get('/api/employees');
   }
 
   title = 'sikfliks';
