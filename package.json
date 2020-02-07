@@ -6,7 +6,7 @@
     "start": "run-p ng:start server:start",
     "server:start": "nodemon server/main.js",
     "ng:start": "ng serve",
-    "ng:build": "ng build",
+    "ng:build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

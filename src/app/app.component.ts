@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from './backend.service';
+import { InstaResponse } from 'src/models/insta.interface';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,13 @@ import { BackendService } from './backend.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  employees: any;
+  instas: InstaResponse;
 
   constructor(private backendService: BackendService) { }
 
   ngOnInit() {
-    this.backendService.getInstaData().subscribe((employees) => {
-      this.employees = employees;
+    this.backendService.getInstaData().subscribe((instas) => {
+      this.instas = instas;
     });
   }
 
