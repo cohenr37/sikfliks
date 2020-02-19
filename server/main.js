@@ -1,37 +1,38 @@
 const axios = require('axios');
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
-const data = require('./data.json');
+// const data = require('./data.json');
 
 const app = express();
 
 const port = 5000;
 const distDir = path.join(__dirname + '/../dist/sikfliks/');
 
-const InstaReq = {
+const YelpReq = {
   'method': 'GET',
-  'url': 'https://instagram9.p.rapidapi.com/api/instagram',
+  'url': 'https://api.yelp.com/v3/businesses/search',
   'headers': {
-    'x-rapidapi-host': 'instagram9.p.rapidapi.com',
-    'x-rapidapi-key': '54a294317fmshe35a8c50b0f82c2p100a2cjsn4d6d671f8a71'
+    'Authorization': 'Bearer IH8NIayvkJYfQzJvE9t_sBm-w-gKFPxHVZt-h92YFqSmMPiOiAWf6-UTKSOWikfRYpjYVq6SV9OBhMQvcDA2uJ6VWuWXtSXVQ8jeuZtVLKhNg7aIJBldjL_p-6VMXnYx'
   }, 'params': {
-    'kullaniciadi': 'nasa',
-    'lang': 'en'
+    'term': 'delis',
+    'latitude': '37.786882',
+    'longitude': '-122.399972'
   }
 }
 
-app.get('/api/insta', (req, res) => {
-  //axios(InstaReq).then((response) => {
-  //   console.log(response.data);
-  //   fs.writeFileSync('data.json',JSON.stringify(response.data, null, 2));
-  //   res.json(response.data);
-  // }).catch((error) => {
-  //   console.error(error);
-  //   next(error);
-  // });
+app.get('/api/yelp', (req, res) => {
+  axios(YelpReq).then((response) => {
+    console.log(response.data);
+    fs.writeFileSync('data.json',JSON.stringify(response.data, null, 2));
+    res.json(response.data);
+  }).catch((error) => {
+    console.error(error);
+    next(error);
+  });
 
-  res.json(data);
+  //res.json(data);
 
 });
 
