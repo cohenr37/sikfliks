@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.backendService.getYelpData().subscribe((data) => {
-      this.data = JSON.stringify(data, null, 2);
+      this.data = data, null, 2;
     });
   }
 
