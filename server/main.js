@@ -57,6 +57,8 @@ async function makeYelpRequest({ movie, lat, lon, radius }) {
       }
       console.log("Success");
     });
+
+    connection.end();
   });
 
   return yelpRes.data;
