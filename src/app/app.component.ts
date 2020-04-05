@@ -12,10 +12,8 @@ export class AppComponent implements OnInit {
   constructor(private backendService: BackendService) { }
 
   ngOnInit() {
-    this.backendService.getYelpData().subscribe((data) => {
-      this.data = data, null, 2;
-    });
+    // this.backendService.getYelpData().subscribe((data) => {
+    //   this.data = data, null, 2;
+    // });
   }
-
-  title = 'sikfliks';
 }
