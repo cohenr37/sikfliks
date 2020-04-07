@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>SikFliks Form</h1>
+  <form #userForm="ngForm" (ngSubmit)="request()" *ngIf="!submitted">
+    <div class="form-group">
+      <label for="movie">Movie</label>
+      <input type="text" class="form-control" id="movie" [(ngModel)]="model.movie" name="movie">
+    </div>
+
+    <div class="form-group">
+      <label for="radius">Search Radius</label>
+      <input type="number" class="form-control" id="radius" required [(ngModel)]="model.radius" name="radius" #radius="ngModel">
+      <div [hidden]="radius.valid || radius.pristine" class="alert alert-danger">Radius is required</div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [attr.disabled]="hasLocation ? undefined : 'disabled'">Go!</button>
+  </form>
+
+  <div *ngIf="submitted">
+    <p *ngFor="let business of response.businesses">{{ business.name }}</p>
+  </div>
+</div>
