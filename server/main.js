@@ -18,6 +18,8 @@ const connection = mysql.createConnection({
 
 const sql = "INSERT INTO delis (store, rating) VALUES ?";
 
+app.use(bodyParser.json());
+
 async function makeYelpRequest({ movie, lat, lon, radius }) {
   const yelpReq = {
     'method': 'GET',
@@ -64,7 +66,45 @@ async function makeYelpRequest({ movie, lat, lon, radius }) {
   return yelpRes.data;
 }
 
-app.use(bodyParser.json());
+function getData(movie)
+{
+    return fetch(`http://www.omdbapi.com/?apikey=5e37af8f&t=${movie}`).then((data) => { 
+        movies = data.json();
+        console.log(movies);
+        fs.writeFileSync('data.json',JSON.stringify(movies, null, 2));
+
+        return movies;
+    }).catch((error) => console.log(error));
+}
+
+app.get('/addmovie', (req, res) => {
+    let movieRequested = req.query.movie;
+
+    if(!movieRequested) {
+        res.status(400);
+    }
+
+    getData(movieRequested).then(movie => {
+        // title, imdb score, release date, 
+        const { Title: mTitle, imdbRating, Released: mReleased, Rated: mRated, Genre: mGenre } = movie;
+
+        let sql = 'INSERT INTO moviedata SET ?';
+        let query = connection.query(sql, { mTitle, imdbRating, mReleased, mRated, mGenre }, (err, result) => {
+            if (err) throw err;
+            console.log(result);
+            res.send('Movie added...');
+        });
+    });
+});
+
+app.get('/getmovie', (req, res) => {
+    let sql = 'SELECT * FROM moviedata';
+    let query = connection.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        res.send(result);
+    })
+})
 
 app.post('/api/movie', async (req, res) => {
   res.json(await makeYelpRequest(req.body));
