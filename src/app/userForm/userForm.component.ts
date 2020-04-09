@@ -12,7 +12,8 @@ import { BackendService } from '../backend.service';
 export class userFormComponent implements OnInit {
 
   model = { movie: "Batman", lat: 51.678418, lon: 7.809007, radius: 10 };
-  response = null;
+  response1 = null;
+  response2 = null;
   submitted = false;
   hasLocation = false;
 
@@ -28,8 +29,12 @@ export class userFormComponent implements OnInit {
   request() {
     this.submitted = true;
 
+    this.backendService.postTheater(this.model).subscribe((res) => {
+      this.response1 = res;
+    });
+
     this.backendService.postMovie(this.model).subscribe((res) => {
-      this.response = res;
+      this.response2 = res;
     });
   }
 

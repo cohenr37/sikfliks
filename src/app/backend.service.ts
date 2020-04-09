@@ -10,8 +10,8 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-  getYelpData(): Observable<any> {
-    return this.http.get('/api/yelp');
+  postTheater(movieForm: MovieForm): Observable<any> {
+    return this.http.post('/api/theater', movieForm);
   }
 
   postMovie(movieForm: MovieForm): Observable<any> {
