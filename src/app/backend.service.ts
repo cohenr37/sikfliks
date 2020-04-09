@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MovieForm } from './movieForm';
 
@@ -10,11 +10,8 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-  postTheater(movieForm: MovieForm): Observable<any> {
-    return this.http.post('/api/theater', movieForm);
+  postUserForm(movieForm: MovieForm): Observable<any> {
+    return this.http.post('/api/userForm', movieForm/*, { headers: new HttpHeaders({ 'Content-Type': 'application/json' })}*/);
   }
 
-  postMovie(movieForm: MovieForm): Observable<any> {
-    return this.http.post('/api/movie', movieForm);
-  }
 }

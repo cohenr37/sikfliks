@@ -20,9 +20,10 @@ const connection = mysql.createConnection({
 
 /*-------------------------------Parses JSON data-------------------------------*/
 app.use(bodyParser.json());
+app.use(express.static(distDir));
 
 /*-------------------------------Takes in user location data and returns relevant JSON data on near by movie theaters-------------------------------*/
-async function makeTheaterRequest({ movie, lat, lon, radius }) {
+async function makeTheaterRequest({ lat, lon, radius }) {
   const yelpReq = { //initialize yelp request object
     'method': 'GET',
     'url': 'https://api.yelp.com/v3/businesses/search',
@@ -46,33 +47,33 @@ async function makeTheaterRequest({ movie, lat, lon, radius }) {
 
   const sql = "INSERT INTO theaters (name, address, rating) VALUES ?";
 
-    var values = [];
+  var values = [];
 
-    for(business of yelpRes.data.businesses) { //iterates through yelp JSON data
-      for(result of googleRes.data.results) { //iterates through google JSON data
-        if( business.name == result.name) { //checks if both names are equal
-          values.push([ business.name, result.vicinity, business.rating ]); //pushes name and rating from yelp data, and address from google data into array
-        }
+  for(business of yelpRes.data.businesses) { //iterates through yelp JSON data
+    for(result of googleRes.data.results) { //iterates through google JSON data
+      if( business.name == result.name) { //checks if both names are equal
+        values.push([ business.name, result.vicinity, business.rating ]); //pushes name and rating from yelp data, and address from google data into array
       }
     }
+  }
 
-    console.log(values);
+  console.log(values);
 
-    connection.query(sql, [values], function(err, result) { //stores data from array into MySQL Database
-      if (err) {
-        console.error('error connecting: ' + err.stack);
-        return;
-      }
-      console.log("Success");
-    });
+  connection.query(sql, [values], function(err, result) { //stores data from array into MySQL Database
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+    console.log("Success");
+  });
 
-    //TODO: make query to select data from MySQL database and store it in JSON data
+  //TODO: make query to select data from MySQL database and store it in JSON data
 
   return yelpRes.data; //returns JSON data
 }
 
 /*-------------------------------Takes in movie name and returns relevant JSON data-------------------------------*/
-async function makeMovieRequest({ movie, lat, lon, radius }) {
+async function makeMovieRequest({ movie }) {
   const imdbReq = { //initialize imbd request object
     'url': `http://www.omdbapi.com/?apikey=5e37af8f&t=${movie}`
   };
@@ -81,28 +82,20 @@ async function makeMovieRequest({ movie, lat, lon, radius }) {
 
   const sql = "INSERT INTO movies (title, imdbRating, released, rated, genre) VALUES ?";
 
-  connection.connect(function(err) { //Creates connection to MySQL database
+  console.log('Connected to local Database!');
+
+  var values = [];
+
+  values.push([imbdRes.data.Title, imbdRes.data.imdbRating, imbdRes.data.Released, imbdRes.data.Rated, imbdRes.data.Genre]); //stores JSON data in array
+
+  console.log(values);
+
+  connection.query(sql, [values], function(err, result) { //stores data from array into MySQL Database
     if (err) {
       console.error('error connecting: ' + err.stack);
       return;
     }
-
-    console.log('Connected to local Database!');
-
-    var values = [];
-
-    values.push([imbdRes.data.Title, imbdRes.data.imdbRating, imbdRes.data.Released, imbdRes.data.Rated, imbdRes.data.Genre]); //stores JSON data in array
-
-    console.log(values);
-
-    connection.query(sql, [values], function(err, result) { //stores data from array into MySQL Database
-      if (err) {
-        console.error('error connecting: ' + err.stack);
-        return;
-      }
-      console.log("Success");
-    });
-
+    console.log("Success");
   });
 
   //TODO: make query to select data from MySQL database and store it in JSON data
@@ -110,18 +103,23 @@ async function makeMovieRequest({ movie, lat, lon, radius }) {
   return imbdRes.data; //returns JSON data
 }
 
-/*-------------------------------Takes in request from client and posts relevant JSON data------------------------------*/
-app.post('/api/theater', async (req, res) => {
-  res.json(await makeTheaterRequest(req.body));
+/*-------------------------------Takes user form data from client and returns JSON------------------------------*/
+app.post('/api/userForm', async (req, res) => {
+  console.log(res.body);
+  res.body = { movie: "Batman", lat: 39.973928199999996, lon: -74.1704807, radius: 10 };
+  try {
+    const [theatreRes, movieRes] = await Promise.all([ makeTheaterRequest(res.body), makeMovieRequest(res.body) ]);
+    res.json({ businesses: theatreRes.businesses, movies: [movieRes] });
+  } catch(e) {
+    res.status(500);
+    res.json({ error: e });
+  }
 });
 
-/*-------------------------------Takes in request from client and posts relevant JSON data------------------------------*/
-app.post('/api/movie', async (req,res) => {
-  res.json(await makeMovieRequest(req.body));
+connection.connect(function(err) { //Creates connection to MySQL database
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+  } else {
+    app.listen(port, () => console.log(`Listening on port ${port}`));
+  }
 });
-
-/*-------------------------------Tells server where the client is-------------------------------*/
-app.use(express.static(distDir));
-
-/*-------------------------------Runs server-------------------------------*/
-app.listen(port, () => console.log(`Listening on port ${port}`));

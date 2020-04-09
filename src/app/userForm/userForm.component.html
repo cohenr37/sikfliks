@@ -15,8 +15,9 @@
     <button type="submit" class="btn btn-success" [attr.disabled]="hasLocation ? undefined : 'disabled'">Go!</button>
   </form>
 
-  <div *ngIf="submitted">
-    <p *ngFor="let result1 of response1.businesses">{{ result1.rating }}</p>
-    <p *ngFor="let result2 of response2">{{ result2.Title }}</p>
+  <div *ngIf="response">
+    <p *ngFor="let result of response.businesses">{{ result.rating }}</p>
+    <p *ngFor="let result of response.movie">{{ result.Title }}</p>
   </div>
+
 </div>
