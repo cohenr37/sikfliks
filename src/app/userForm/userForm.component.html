@@ -16,6 +16,7 @@
   </form>
 
   <div *ngIf="submitted">
-    <p *ngFor="let business of response.businesses">{{ business.name }}</p>
+    <p *ngFor="let result1 of response1.businesses">{{ result1.rating }}</p>
+    <p *ngFor="let result2 of response2">{{ result2.Title }}</p>
   </div>
 </div>
