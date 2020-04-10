@@ -11,7 +11,7 @@ export class BackendService {
   constructor(private http: HttpClient) { }
 
   postUserForm(movieForm: MovieForm): Observable<any> {
-    return this.http.post('/api/userForm', movieForm/*, { headers: new HttpHeaders({ 'Content-Type': 'application/json' })}*/);
+    return this.http.post('/api/userForm', movieForm);
   }
 
 }

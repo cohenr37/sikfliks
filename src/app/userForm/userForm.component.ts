@@ -30,6 +30,7 @@ export class userFormComponent implements OnInit {
 
     this.backendService.postUserForm(this.model).subscribe((res) => {
       this.response = res;
+      console.log(this.response);
     });
 
   }
