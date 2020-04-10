@@ -9,7 +9,7 @@ const app = express();
 const port = 5000;
 const distDir = path.join(__dirname + '/../dist/sikfliks/');
 
-const SQLConnection = require('./sql');
+const SQLConnection = require('./sql');//calls sql file to use sql functionality
 
 /*-------------------------------assign connection to database-------------------------------*/
 const connection = new SQLConnection({
@@ -62,10 +62,10 @@ async function makeTheaterRequest({ lat, lon, radius }) {
     }
   }
 
-  await connection.query("INSERT INTO theaters (name, address, rating) VALUES ?", [values]);
-  theaterData = await connection.query("SELECT * FROM theaters");
+  await connection.query("INSERT INTO theaters (name, address, rating) VALUES ?", [values]);//inserts json data into database
+  theaterData = await connection.query("SELECT * FROM theaters");//takes data out of database
 
-  return theaterData;
+  return theaterData;//returns data taken from database
 }
 
 /*-------------------------------Takes in movie name and returns relevant JSON data-------------------------------*/
@@ -83,10 +83,10 @@ async function makeMovieRequest({ movie }) {
 
   values.push([imbdRes.data.Title, imbdRes.data.imdbRating, imbdRes.data.Released, imbdRes.data.Rated, imbdRes.data.Genre]); //stores JSON data in array
 
-  await connection.query("INSERT INTO movies (title, imdbRating, released, rated, genre) VALUES ?", [values]);
-  movieData = await connection.query("SELECT * FROM movies");
+  await connection.query("INSERT INTO movies (title, imdbRating, released, rated, genre) VALUES ?", [values]);//inserts JSON data into database
+  movieData = await connection.query("SELECT * FROM movies");//takes data out of database
 
-  return movieData;
+  return movieData;//returns data taken from database
 }
 
 /*-------------------------------Takes user form data from client and returns JSON------------------------------*/
@@ -100,6 +100,6 @@ app.post('/api/userForm', async (req, res) => {
   }
 });
 
-connection.init().then(() => {
-  app.listen(port, () => console.log(`Listening on port ${port}`));
+connection.init().then(() => {//Connects to MySQL database
+  app.listen(port, () => console.log(`Listening on port ${port}`));//Runs Express server
 });
