@@ -7,11 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { from } from 'rxjs';
 import { userFormComponent } from './userForm/userForm.component';
+import { NbspPipe } from './nbsp.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    userFormComponent
+    userFormComponent,
+    NbspPipe
   ],
   imports: [
     BrowserModule,

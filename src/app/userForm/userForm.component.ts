@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MovieForm } from '../movieForm';
 import { BackendService } from '../backend.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-userForm',
