@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MovieForm } from '../movieForm';
 import { BackendService } from '../backend.service';
 import { Observable } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-userForm',
@@ -14,10 +16,10 @@ export class userFormComponent implements OnInit {
 
   model = { movie: "Batman", lat: 51.678418, lon: 7.809007, radius: 10 };
   response = null;
-  submitted = false;
   hasLocation = false;
 
   constructor(private backendService: BackendService) {}
+
 
   ngOnInit() {
     this.geoFindMe().then((location: any) => {
@@ -27,13 +29,10 @@ export class userFormComponent implements OnInit {
   }
 
   request() {
-    this.submitted = true;
-
     this.backendService.postUserForm(this.model).subscribe((res) => {
       this.response = res;
       console.log(this.response);
     });
-
   }
 
   geoFindMe() {

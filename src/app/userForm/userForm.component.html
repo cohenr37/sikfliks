@@ -16,8 +16,6 @@
   </form>
 
   <div *ngIf="response">
-    <!--<p *ngFor="let result of response.businesses">{{ result.rating }}</p>
-    <p *ngFor="let result of response.movies">{{ result.title }}</p> -->
     <table class="table table-striped">
       <thead>
         <tr>
@@ -52,7 +50,7 @@
       <tbody>
         <tr *ngFor="let result of response.movies; index as i">
           <th scope="row">{{ i + 1 }}</th>
-          <td style="width: 140px"><img [src]="result.poster" style="width: 99px"></td>
+          <td style="width: 140px"><a href="{{result.imdbID}}" ng-click="result.imdbID"><img [src]="result.poster" style="width: 99px"></a></td>
           <td>{{ result.title }}</td>
           <td>{{ result.rated }}</td>
           <td style="width: 140px">{{ result.genre | nbsp }}</td>

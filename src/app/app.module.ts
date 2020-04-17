@@ -8,12 +8,16 @@ import { AppComponent } from './app.component';
 import { from } from 'rxjs';
 import { userFormComponent } from './userForm/userForm.component';
 import { NbspPipe } from './nbsp.pipe';
+import { TheaterTablesComponent } from './theater-tables/theater-tables.component';
+import { MovieTablesComponent } from './movie-tables/movie-tables.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     userFormComponent,
-    NbspPipe
+    NbspPipe,
+    TheaterTablesComponent,
+    MovieTablesComponent
   ],
   imports: [
     BrowserModule,
