@@ -15,8 +15,8 @@ const SQLConnection = require('./sql');//calls sql file to use sql functionality
 const connection = new SQLConnection({
   host : "localhost",
   port : "3306",
-  user : "chletsosa2",
-  password : "purplescarf",
+  user : "root",
+  password : "",
   database : "sikfliks",
 });
 
