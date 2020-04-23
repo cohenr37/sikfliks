@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BackendService } from './backend.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { BackendService } from './backend.service';
 })
 export class AppComponent implements OnInit {
   data: any;
+  response = null;
 
   constructor(private backendService: BackendService) { }
 
@@ -15,5 +16,12 @@ export class AppComponent implements OnInit {
     // this.backendService.getYelpData().subscribe((data) => {
     //   this.data = data, null, 2;
     // });
+  }
+
+  request(model) {
+    this.backendService.postUserForm(model).subscribe((res) => {
+      this.response = res;
+      console.log(this.response);
+    });
   }
 }

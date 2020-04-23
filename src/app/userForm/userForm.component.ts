@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MovieForm } from '../movieForm';
 import { BackendService } from '../backend.service';
+import { Observable } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-userForm',
@@ -11,12 +14,14 @@ import { BackendService } from '../backend.service';
 
 export class userFormComponent implements OnInit {
 
+  @Output() buttonClicked = new EventEmitter<{movie: string, lat: number, lon: number, radius: number}>();
   model = { movie: "Batman", lat: 51.678418, lon: 7.809007, radius: 10 };
-  response = null;
-  submitted = false;
   hasLocation = false;
+  submitted = false;
+
 
   constructor(private backendService: BackendService) {}
+
 
   ngOnInit() {
     this.geoFindMe().then((location: any) => {
@@ -25,14 +30,9 @@ export class userFormComponent implements OnInit {
     }).then(() => this.hasLocation = true)
   }
 
-  request() {
+  emitEvent() {
     this.submitted = true;
-
-    this.backendService.postUserForm(this.model).subscribe((res) => {
-      this.response = res;
-      console.log(this.response);
-    });
-
+    this.buttonClicked.emit({movie: this.model.movie, lat: this.model.lat, lon: this.model.lon, radius: this.model.radius});
   }
 
   geoFindMe() {

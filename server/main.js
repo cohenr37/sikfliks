@@ -69,21 +69,35 @@ async function makeTheaterRequest({ lat, lon, radius }) {
 }
 
 /*-------------------------------Takes in movie name and returns relevant JSON data-------------------------------*/
-async function makeMovieRequest({ movie }) {
-
-  await connection.query("TRUNCATE TABLE movies");
+async function makeMovieDetailsRequest(movieID, moviePoster) {
 
   const imdbReq = { //initialize imbd request object
-    'url': `http://www.omdbapi.com/?apikey=5e37af8f&t=${movie}`
+    'url': `http://www.omdbapi.com/?apikey=5e37af8f&i=${movieID}`
   };
 
   const imbdRes = await axios(imdbReq); //Makes request to imdb API and assigns it to response object
 
   const values = [];
 
-  values.push([imbdRes.data.Title, imbdRes.data.imdbRating, imbdRes.data.Released, imbdRes.data.Rated, imbdRes.data.Genre]); //stores JSON data in array
+  values.push([imbdRes.data.Title, imbdRes.data.imdbRating, imbdRes.data.Released, imbdRes.data.Rated, imbdRes.data.Genre, moviePoster, `https://www.imdb.com/title/${movieID}`]); //stores JSON data in array
 
-  await connection.query("INSERT INTO movies (title, imdbRating, released, rated, genre) VALUES ?", [values]);//inserts JSON data into database
+  await connection.query("INSERT INTO movies (title, imdbrating, released, rated, genre, poster, imdbID) VALUES ?", [values]);//inserts JSON data into database
+}
+
+async function makeMovieListRequest({ movie }) {
+
+  await connection.query("TRUNCATE TABLE movies");
+
+  const imdbReq = { //initialize imbd request object
+    'url': `http://www.omdbapi.com/?apikey=5e37af8f&s=${movie}`
+  };
+
+  const imbdRes = await axios(imdbReq); //Makes request to imdb API and assigns it to response object
+
+  for(movie of imbdRes.data.Search) { // iterates through json data
+    await makeMovieDetailsRequest(movie.imdbID, movie.Poster); // sends imdbID to get specific movie details
+  }
+
   movieData = await connection.query("SELECT * FROM movies");//takes data out of database
 
   return movieData;//returns data taken from database
@@ -91,13 +105,8 @@ async function makeMovieRequest({ movie }) {
 
 /*-------------------------------Takes user form data from client and returns JSON------------------------------*/
 app.post('/api/userForm', async (req, res) => {
-  try {
-    const [theatreData, movieData] = await Promise.all([ makeTheaterRequest(req.body), makeMovieRequest(req.body) ]);
-    res.json({ businesses: theatreData, movies: movieData });
-  } catch(e) {
-    res.status(500);
-    res.json({ error: e });
-  }
+  const [theatreData, movieData] = await Promise.all([ makeTheaterRequest(req.body), makeMovieListRequest(req.body) ]);
+  res.json({ businesses: theatreData, movies: movieData });
 });
 
 connection.init().then(() => {//Connects to MySQL database
