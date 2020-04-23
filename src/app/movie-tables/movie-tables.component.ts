@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-movie-tables',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie-tables.component.scss']
 })
 export class MovieTablesComponent implements OnInit {
+
+  @Input() response;
 
   constructor() { }
 

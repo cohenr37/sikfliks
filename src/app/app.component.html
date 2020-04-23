@@ -1,3 +1,14 @@
-<app-userForm></app-userForm>
+<app-userForm (buttonClicked)="request($event)"></app-userForm>
+
+<div *ngIf="response">
+  <!--<app-theater-tables [response]="response"></app-theater-tables>
+  <app-movie-tables [response]="response"></app-movie-tables>-->
+  <nav>
+    <a routerLink="/movies" routerLinkActive="active">Movies</a>
+    <a routerLink="/theaters" routerLinkActive="active">Theaters</a>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>
 
 

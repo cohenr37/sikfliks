@@ -1,6 +1,6 @@
 <div class="container">
   <h1>SikFliks</h1>
-  <form #userForm="ngForm" (ngSubmit)="request()" *ngIf="!submitted">
+  <form #userForm="ngForm" *ngIf="!submitted">
     <div class="form-group">
       <label for="movie">Movie</label>
       <input type="text" class="form-control" id="movie" [(ngModel)]="model.movie" name="movie">
@@ -12,53 +12,6 @@
       <div [hidden]="radius.valid || radius.pristine" class="alert alert-danger">Radius is required</div>
     </div>
 
-    <button type="submit" class="btn btn-success" [attr.disabled]="hasLocation ? undefined : 'disabled'">Go!</button>
+    <button type="submit" class="btn btn-success" [attr.disabled]="hasLocation ? undefined : 'disabled'" (click)="emitEvent()">Go!</button>
   </form>
-
-  <div *ngIf="response">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Movie Theater</th>
-          <th scope="col">Address</th>
-          <th scope="col">Rating</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let result of response.businesses; index as i">
-          <th scope="row">{{ i + 1 }}</th>
-          <td>{{ result.name }}</td>
-          <td>{{ result.address }}</td>
-          <td>{{ result.rating }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Movie Poster</th>
-          <th scope="col">Movie Title</th>
-          <th scope="col">Rating</th>
-          <th scope="col">Genre</th>
-          <th scope="col">IMBD Rating</th>
-          <th scope="col">Release Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let result of response.movies; index as i">
-          <th scope="row">{{ i + 1 }}</th>
-          <td style="width: 140px"><a href="{{result.imdbID}}" ng-click="result.imdbID"><img [src]="result.poster" style="width: 99px"></a></td>
-          <td>{{ result.title }}</td>
-          <td>{{ result.rated }}</td>
-          <td style="width: 140px">{{ result.genre | nbsp }}</td>
-          <td>{{ result.imdbrating }}</td>
-          <td>{{ result.released }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
 </div>

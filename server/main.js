@@ -81,7 +81,7 @@ async function makeMovieDetailsRequest(movieID, moviePoster) {
 
   values.push([imbdRes.data.Title, imbdRes.data.imdbRating, imbdRes.data.Released, imbdRes.data.Rated, imbdRes.data.Genre, moviePoster, `https://www.imdb.com/title/${movieID}`]); //stores JSON data in array
 
-  await connection.query("INSERT INTO movies (title, imdbRating, released, rated, genre, poster, imdbID) VALUES ?", [values]);//inserts JSON data into database
+  await connection.query("INSERT INTO movies (title, imdbrating, released, rated, genre, poster, imdbID) VALUES ?", [values]);//inserts JSON data into database
 }
 
 async function makeMovieListRequest({ movie }) {
