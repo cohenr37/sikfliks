@@ -17,11 +17,8 @@ export class userFormComponent implements OnInit {
   @Output() buttonClicked = new EventEmitter<{movie: string, lat: number, lon: number, radius: number}>();
   model = { movie: "Batman", lat: 51.678418, lon: 7.809007, radius: 10 };
   hasLocation = false;
-  submitted = false;
-
 
   constructor(private backendService: BackendService) {}
-
 
   ngOnInit() {
     this.geoFindMe().then((location: any) => {
@@ -30,9 +27,8 @@ export class userFormComponent implements OnInit {
     }).then(() => this.hasLocation = true)
   }
 
-  emitEvent() {
-    this.submitted = true;
-    this.buttonClicked.emit({movie: this.model.movie, lat: this.model.lat, lon: this.model.lon, radius: this.model.radius});
+  postForm() {
+    this.backendService.postUserForm({movie: this.model.movie, lat: this.model.lat, lon: this.model.lon, radius: this.model.radius});
   }
 
   geoFindMe() {

@@ -1,6 +1,5 @@
 <div class="container">
-  <h1>SikFliks</h1>
-  <form #userForm="ngForm" *ngIf="!submitted">
+  <form #userForm="ngForm">
     <div class="form-group">
       <label for="movie">Movie</label>
       <input type="text" class="form-control" id="movie" [(ngModel)]="model.movie" name="movie">
@@ -12,6 +11,6 @@
       <div [hidden]="radius.valid || radius.pristine" class="alert alert-danger">Radius is required</div>
     </div>
 
-    <button type="submit" class="btn btn-success" [attr.disabled]="hasLocation ? undefined : 'disabled'" (click)="emitEvent()">Go!</button>
+    <button type="submit" class="btn btn-success" [attr.disabled]="hasLocation ? undefined : 'disabled'" (click)="postForm()">Go!</button>
   </form>
 </div>
