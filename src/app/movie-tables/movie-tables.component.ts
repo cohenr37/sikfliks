@@ -1,17 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {ActivatedRoute,Params} from '@angular/router';
+import { BackendService } from '../backend.service';
 
 @Component({
   selector: 'app-movie-tables',
   templateUrl: './movie-tables.component.html',
   styleUrls: ['./movie-tables.component.scss']
 })
-export class MovieTablesComponent implements OnInit {
+export class MovieTablesComponent {
+  state$ = this.backendService.currentState;
 
-  @Input() response;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor(private route:ActivatedRoute,
+              private backendService: BackendService) { }
 
 }

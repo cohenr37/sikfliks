@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Directive, HostListener } from '@angular/core';
+import {Router, NavigationExtras} from '@angular/router';
 import { BackendService } from './backend.service';
 
 @Component({
@@ -6,22 +7,11 @@ import { BackendService } from './backend.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent implements OnInit {
-  data: any;
-  response = null;
+  public response:any;
 
-  constructor(private backendService: BackendService) { }
+  constructor(private router: Router) { }
 
-  ngOnInit() {
-    // this.backendService.getYelpData().subscribe((data) => {
-    //   this.data = data, null, 2;
-    // });
-  }
-
-  request(model) {
-    this.backendService.postUserForm(model).subscribe((res) => {
-      this.response = res;
-      console.log(this.response);
-    });
-  }
+  ngOnInit() {}
 }

@@ -1,18 +1,20 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Movie Theater</th>
-      <th scope="col">Address</th>
-      <th scope="col">Rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let result of response.businesses; index as i">
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ result.name }}</td>
-      <td>{{ result.address }}</td>
-      <td>{{ result.rating }}</td>
-    </tr>
-  </tbody>
-</table>
+<ng-container *ngIf="state$ | async as state">
+  <table class="table table-striped" *ngIf="state.data">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Movie Theater</th>
+        <th scope="col">Address</th>
+        <th scope="col">Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of state.data.businesses; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ result.name }}</td>
+        <td>{{ result.address }}</td>
+        <td>{{ result.rating }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
