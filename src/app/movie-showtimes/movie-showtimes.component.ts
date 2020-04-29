@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {ActivatedRoute,Params, Router} from '@angular/router';
+import {ActivatedRoute,Params} from '@angular/router';
 import { BackendService } from '../backend.service';
 
 @Component({
-  selector: 'app-theater-tables',
-  templateUrl: './theater-tables.component.html',
-  styleUrls: ['./theater-tables.component.scss']
+  selector: 'app-movie-showtimes',
+  templateUrl: './movie-showtimes.component.html',
+  styleUrls: ['./movie-showtimes.component.scss']
 })
-export class TheaterTablesComponent {
+export class MovieShowtimesComponent {
   state$ = this.backendService.currentState;
 
   constructor(private route:ActivatedRoute,
