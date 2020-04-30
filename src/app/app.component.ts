@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Directive, HostListener } from '@angular/core';
-import {Router, NavigationExtras} from '@angular/router';
+import { Component, OnInit} from '@angular/core';
 import { BackendService } from './backend.service';
 
 @Component({
@@ -11,7 +10,9 @@ import { BackendService } from './backend.service';
 export class AppComponent implements OnInit {
   public response:any;
 
-  constructor(private router: Router) { }
+  public state$ = this.backendService.currentState;
+
+  constructor(private backendService: BackendService) { }
 
   ngOnInit() {}
 }
