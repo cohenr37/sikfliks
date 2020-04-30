@@ -11,7 +11,13 @@ const distDir = path.join(__dirname + '/../dist/sikfliks/');
 
 const SQLConnection = require('./sql');//calls sql file to use sql functionality
 const {
-  INSERT_THEATERS
+  INSERT_THEATERS,
+  SELECT_THEATERS,
+  CLEAR_THEATERS,
+  INSERT_MOVIES,
+  SELECT_MOVIES,
+  CLEAR_MOVIES,
+  SELECT_SHOWTIMES
 } = require('./constants');
 
 /*-------------------------------assign connection to database-------------------------------*/
@@ -30,7 +36,7 @@ app.use(express.static(distDir));
 /*-------------------------------Takes in user location data and returns relevant JSON data on near by movie theaters-------------------------------*/
 async function makeTheaterRequest({ lat, lon, radius }) {
   try {
-    await connection.query("TRUNCATE TABLE theaters");
+    await connection.query(CLEAR_THEATERS);
 
     const yelpReq = { //initialize yelp request object
       'method': 'GET',
@@ -66,7 +72,7 @@ async function makeTheaterRequest({ lat, lon, radius }) {
     }
 
     await connection.query(INSERT_THEATERS, [values]);//inserts json data into database
-    theaterData = await connection.query("SELECT * FROM theaters");//takes data out of database
+    theaterData = await connection.query(SELECT_THEATERS);//takes data out of database
 
     return theaterData;//returns data taken from database
   } catch(e) {
@@ -88,7 +94,7 @@ async function makeMovieDetailsRequest(movieID, moviePoster) {
 
     values.push([imbdRes.data.Title, imbdRes.data.imdbRating, imbdRes.data.Released, imbdRes.data.Rated, imbdRes.data.Genre, moviePoster, `https://www.imdb.com/title/${movieID}`]); //stores JSON data in array
 
-    await connection.query("INSERT INTO movies (title, imdbrating, released, rated, genre, poster, imdbID) VALUES ?", [values]);//inserts JSON data into database
+    await connection.query(INSERT_MOVIES, [values]);//inserts JSON data into database
   } catch(e) {
     console.error(e);
     return e;
@@ -98,7 +104,7 @@ async function makeMovieDetailsRequest(movieID, moviePoster) {
 /*-------------------------------Takes in user movie search request and returns relevant movie data-------------------------------*/
 async function makeMovieListRequest({ movie }) {
   try {
-    await connection.query("TRUNCATE TABLE movies");
+    await connection.query(CLEAR_MOVIES);
 
     const imdbReq = { //initialize imbd request object
       'url': `http://www.omdbapi.com/?apikey=5e37af8f&s=${movie}`
@@ -110,7 +116,7 @@ async function makeMovieListRequest({ movie }) {
       await makeMovieDetailsRequest(movie.imdbID, movie.Poster); // sends imdbID to get specific movie details
     }
 
-    movieData = await connection.query("SELECT * FROM movies");//takes data out of database
+    movieData = await connection.query(SELECT_MOVIES);//takes data out of database
 
     return movieData;//returns data taken from database
   } catch(e) {
@@ -123,7 +129,7 @@ async function makeMovieListRequest({ movie }) {
 /*-------------------------------Gets showtime information from database-------------------------------*/
 async function makeShowtimesRequest(){
   try{
-    showtimeData = await connection.query(`SELECT title, theater, address, DATE_FORMAT(showDate, "%M %D, %Y") AS date, TIME_FORMAT(showTime,"%h:%i %p") AS time FROM showtimes WHERE title = 'Onward'`); //takes data out of database
+    showtimeData = await connection.query(SELECT_SHOWTIMES); //takes data out of database
 
     return showtimeData;//returns data taken from database
   } catch(e) {
