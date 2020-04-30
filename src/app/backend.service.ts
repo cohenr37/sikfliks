@@ -8,7 +8,7 @@ import { MovieForm } from './movieForm';
 })
 export class BackendService {
   private isSubmitted = false;
-  private isLoading = true;
+  private isLoading = false;
   private data;
 
   private stateSubject = new BehaviorSubject({ isSubmitted: this.isSubmitted, isLoading: this.isLoading, data: this.data });
@@ -18,6 +18,7 @@ export class BackendService {
 
   postUserForm(movieForm: MovieForm) {
     this.isSubmitted = true;
+    this.isLoading = true;
     this.stateSubject.next({ isSubmitted: this.isSubmitted, isLoading: this.isLoading, data: this.data });
     this.http.post('/api/userForm', movieForm).subscribe(data => {
       this.isLoading = false;
