@@ -1,5 +1,4 @@
 <ng-container *ngIf="state$ | async as state">
-  <pre> {{ state | json }} </pre>
   <table class="table table-striped" *ngIf=state.data>
     <thead>
       <tr>
