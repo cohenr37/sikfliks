@@ -10,6 +10,8 @@ import { NbspPipe } from './nbsp.pipe';
 import { IsSubmittedGuard } from './is-submitted.guard';
 import { MovieTablesComponent } from './movie-tables/movie-tables.component';
 import { TheaterTablesComponent } from './theater-tables/theater-tables.component';
+import { MovieShowtimesComponent } from './movie-showtimes/movie-showtimes.component';
+import { TheaterShowtimesComponent } from './theater-showtimes/theater-showtimes.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { TheaterTablesComponent } from './theater-tables/theater-tables.componen
     userFormComponent,
     MovieTablesComponent,
     TheaterTablesComponent,
-    NbspPipe
+    NbspPipe,
+    MovieShowtimesComponent,
+    TheaterShowtimesComponent
   ],
   imports: [
     BrowserModule,
