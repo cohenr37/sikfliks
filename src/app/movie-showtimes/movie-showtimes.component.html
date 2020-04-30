@@ -11,7 +11,7 @@
       <tbody>
         <tr *ngFor="let result of state.data.showtimes; index as i">
             <th scope="row">{{ i + 1 }}</th>
-            <td><a [routerLink]="['/t-showtimes']" routerLinkActive="active">{{result.name}}</a></td>
+            <td><a [routerLink]="['/t-showtimes']" routerLinkActive="active">{{result.theater}}</a></td>
             <td>{{result.address}}</td>
             <td>{{result.showDate}}</td>
             <td>{{result.showTime}}</td>
@@ -19,4 +19,3 @@
       </tbody>
     </table>
   </ng-container>
-  

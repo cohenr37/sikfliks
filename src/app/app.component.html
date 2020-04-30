@@ -1,10 +1,11 @@
 
 <div style="text-align: center">
   <nav>
-    <h1 style="text-align: center" [routerLink]="['/']" routerLinkActive="active">SikFliks</h1>
+    <a style="text-align: center" [routerLink]="['/']" routerLinkActive="active">SikFliks</a><br>
     <button class="btn btn-success" [routerLink]="['/movies']" routerLinkActive="active" style="margin-right: 10px;" >Movies</button>
     <button class="btn btn-success" [routerLink]="['/theaters']" routerLinkActive="active" style="margin-left: 10px;" >Theaters</button>
   </nav>
 </div>
+
 
 <router-outlet></router-outlet>
