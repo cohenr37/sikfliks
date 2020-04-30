@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {ActivatedRoute,Params, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 
 @Component({
@@ -10,8 +9,5 @@ import { BackendService } from '../backend.service';
 export class TheaterShowtimesComponent {
   state$ = this.backendService.currentState;
 
-  constructor(private route:ActivatedRoute,
-              private backendService: BackendService,
-              private router: Router) { }
-
+  constructor(private backendService: BackendService) { }
 }

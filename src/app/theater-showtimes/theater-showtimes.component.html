@@ -1,19 +1,19 @@
 <ng-container *ngIf="state$ | async as state">
-    <table class="table table-striped" *ngIf=state.data>
-      <thead>
-        <tr>
-          <th scope="col">Movie</th>
-          <th scope="col">Show Date</th>
-          <th scope="col">Show Times</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let result of state.data.showtimes; index as i">
-          <th scope="row">{{ i + 1 }}</th>
-          <td>{{result.title}}</td>
-          <td>{{result.showDate}}</td>
-          <td>{{result.showTime}}</td>
+  <table class="table table-striped" *ngIf=state.data>
+    <thead>
+      <tr>
+        <th scope="col">Movie</th>
+        <th scope="col">Show Date</th>
+        <th scope="col">Show Times</th>
       </tr>
-      </tbody>
-    </table>
-  </ng-container>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of state.data.showtimes; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{result.title}}</td>
+        <td>{{result.date}}</td>
+        <td>{{result.time}}</td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>
