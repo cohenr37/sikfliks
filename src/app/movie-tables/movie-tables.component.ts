@@ -11,6 +11,7 @@ export class MovieTablesComponent {
   state$ = this.backendService.currentState;
 
   constructor(private route:ActivatedRoute,
-              private backendService: BackendService) { }
+              private backendService: BackendService,
+              private router: Router) { }
 
 }

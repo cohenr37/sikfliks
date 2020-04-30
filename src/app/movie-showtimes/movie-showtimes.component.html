@@ -4,40 +4,19 @@
         <tr>
           <th scope="col">Movie Theater</th>
           <th scope="col">Address</th>
+          <th scope="col">Show Date</th>
           <th scope="col">Show Times</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-            <td>AMC Marlton 8</td>
-            <td>800 NJ-73, Marlton</td>
-            <td>9:00-10:45, 11:00-12:45, 1:00-2:45 </td>
-        </tr>
-        <tr>
-            <td>AMC Cherry Hill 24</td>
-            <td>2121 NJ-38, Cherry Hill</td>
-            <td>9:00-11:15</td>
-        </tr>
-        <tr>
-            <td>Regal Moorestown Mall & RPX</td>
-            <td>400 NJ-38, Moorestown</td>
-            <td>9:00-11:15 </td>
-        </tr>
-        <tr>
-            <td>AMC Voorhees 16</td>
-            <td>900 Haddonfield-Berlin Rd, Voorhees Township</td>
-            <td>9:00-10:55</td>
-        </tr>
-        <tr>
-            <td>AMC Deptford 8</td>
-            <td>1740 Clements Bridge Rd, Deptford Township</td>
-            <td>9:00-10:45</td>
-        </tr>
-        <tr>
-            <td>Cinemark 16 and XD</td>
-            <td>711 Evesham Rd, Somerdale</td>
-            <td>9:00-11:15</td>
-        </tr>
+        <tr *ngFor="let result of state.data.showtimes; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td><a [routerLink]="['/t-showtimes']" routerLinkActive="active">{{result.name}}</a></td>
+            <td>{{result.address}}</td>
+            <td>{{result.showDate}}</td>
+            <td>{{result.showTime}}</td>
+        </tr>    
       </tbody>
     </table>
   </ng-container>
+  

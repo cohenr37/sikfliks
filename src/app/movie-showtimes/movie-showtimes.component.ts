@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {ActivatedRoute,Params} from '@angular/router';
+import {ActivatedRoute,Params, Router} from '@angular/router';
 import { BackendService } from '../backend.service';
 
 @Component({
@@ -11,6 +11,7 @@ export class MovieShowtimesComponent {
   state$ = this.backendService.currentState;
 
   constructor(private route:ActivatedRoute,
-              private backendService: BackendService) { }
+              private backendService: BackendService,
+              private router: Router) { }
 
 }
