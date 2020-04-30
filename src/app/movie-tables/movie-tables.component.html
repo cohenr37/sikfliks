@@ -14,8 +14,8 @@
     <tbody>
       <tr *ngFor="let result of state.data.movies; index as i">
         <th scope="row">{{ i + 1 }}</th>
-        <td style="width: 140px"><a href="{{result.imdbID}}" ng-click="result.imdbID"><img [src]="result.poster" style="width: 99px"></a></td>
-        <td>{{ result.title }}</td>
+        <td style="width: 140px"><a [routerLink]="['/m-showtimes']" routerLinkActive="active"><img [src]="result.poster" style="width: 99px"></a></td>
+        <td><a href="{{result.imdbID}}" ng-click="result.imdbID">{{ result.title }}</a></td>
         <td>{{ result.rated }}</td>
         <td style="width: 140px">{{ result.genre | nbsp }}</td>
         <td>{{ result.imdbrating }}</td>
