@@ -11,8 +11,8 @@ const routes: Routes = [
   {path: '', component: userFormComponent},
   {path: 'movies', component: MovieTablesComponent, canActivate: [IsSubmittedGuard] },
   {path: 'theaters', component: TheaterTablesComponent, canActivate: [IsSubmittedGuard] },
-  {path: 'm-showtimes', component: MovieShowtimesComponent, canActivate: [IsSubmittedGuard] },
-  {path: 't-showtimes', component: TheaterShowtimesComponent, canActivate: [IsSubmittedGuard]  }
+  {path: 'showtimes/movies', component: MovieShowtimesComponent, canActivate: [IsSubmittedGuard] },
+  {path: 'showtimes/theaters', component: TheaterShowtimesComponent, canActivate: [IsSubmittedGuard]  }
 ];
 
 @NgModule({
