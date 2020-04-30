@@ -10,7 +10,5 @@ import { BackendService } from '../backend.service';
 export class TheaterTablesComponent {
   state$ = this.backendService.currentState;
 
-  constructor(private route:ActivatedRoute,
-              private backendService: BackendService) { }
-
+  constructor(private route:ActivatedRoute, private backendService: BackendService) { }
 }
