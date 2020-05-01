@@ -1,10 +1,7 @@
-import { Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MovieForm } from '../movieForm';
 import { BackendService } from '../backend.service';
-import { Observable } from 'rxjs';
-
-
 
 @Component({
   selector: 'app-userForm',
@@ -15,7 +12,7 @@ import { Observable } from 'rxjs';
 export class userFormComponent implements OnInit {
 
   @Output() buttonClicked = new EventEmitter<{movie: string, lat: number, lon: number, radius: number}>();
-  model = { movie: "Batman", lat: 51.678418, lon: 7.809007, radius: 10 };
+  model = { movie: "", lat: 51.678418, lon: 7.809007, radius: 0 };
   hasLocation = false;
 
   constructor(private backendService: BackendService) {}

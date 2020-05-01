@@ -24,8 +24,8 @@ const {
 const connection = new SQLConnection({
   host : "localhost",
   port : "3306",
-  user : "root",
-  password : "",
+  user : "chletsosa2",
+  password : "purplescarf",
   database : "sikfliks",
 });
 

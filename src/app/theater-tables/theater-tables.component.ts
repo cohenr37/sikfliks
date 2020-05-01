@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {ActivatedRoute,Params, Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BackendService } from '../backend.service';
 
 @Component({
@@ -10,5 +10,6 @@ import { BackendService } from '../backend.service';
 export class TheaterTablesComponent {
   state$ = this.backendService.currentState;
 
-  constructor(private route:ActivatedRoute, private backendService: BackendService) { }
+  constructor(private activatedRoute: ActivatedRoute, private backendService: BackendService) { }
+
 }

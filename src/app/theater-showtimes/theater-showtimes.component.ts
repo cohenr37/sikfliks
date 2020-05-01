@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BackendService } from '../backend.service';
+import { Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-theater-showtimes',
@@ -7,7 +8,12 @@ import { BackendService } from '../backend.service';
   styleUrls: ['./theater-showtimes.component.scss']
 })
 export class TheaterShowtimesComponent {
-  state$ = this.backendService.currentState;
+  public state$ = this.backendService.currentState;
+  public theaterName: string;
 
-  constructor(private backendService: BackendService) { }
+  constructor(private backendService: BackendService, private activatedRoute: ActivatedRoute, private router: Router) { }
+
+  ngOnInit() {
+    this.theaterName = this.activatedRoute.snapshot.params['theaterName'];
+  }
 }

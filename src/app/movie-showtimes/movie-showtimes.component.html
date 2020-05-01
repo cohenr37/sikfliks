@@ -11,11 +11,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let result of state.data.showtimes; index as i">
+        <ng-container *ngIf="result.title === movieTitle">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{result.theater}}</td>
           <td>{{result.address}}</td>
           <td>{{result.date}}</td>
           <td>{{result.time}}</td>
+        </ng-container>
       </tr>
     </tbody>
   </table>
