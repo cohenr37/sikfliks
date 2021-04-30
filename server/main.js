@@ -24,8 +24,8 @@ const {
 const connection = new SQLConnection({
   host : "localhost",
   port : "3306",
-  user : "chletsosa2",
-  password : "purplescarf",
+  user : "root",
+  password : "",
   database : "sikfliks",
 });
 
@@ -42,7 +42,7 @@ async function makeTheaterRequest({ lat, lon, radius }) {
       'method': 'GET',
       'url': 'https://api.yelp.com/v3/businesses/search',
       'headers': {
-        'Authorization': 'Bearer IH8NIayvkJYfQzJvE9t_sBm-w-gKFPxHVZt-h92YFqSmMPiOiAWf6-UTKSOWikfRYpjYVq6SV9OBhMQvcDA2uJ6VWuWXtSXVQ8jeuZtVLKhNg7aIJBldjL_p-6VMXnYx'
+        'Authorization': 'Bearer '
       }, 'params': {
         'term': 'Movie Theater',
         'latitude': lat,
@@ -52,7 +52,7 @@ async function makeTheaterRequest({ lat, lon, radius }) {
     };
 
     const googleReq = { //initialize google request object
-      'url': `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=${Math.floor(radius * 1609)}&keyword=movie+theater&key=AIzaSyDTJKFijibXnktIxup9p2LX3COiifcTYL8`
+      'url': `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=${Math.floor(radius * 1609)}&keyword=movie+theater&key=`
     };
 
     const googleRes = await axios(googleReq); //Makes request to imdb API and assigns it to response object
@@ -85,7 +85,7 @@ async function makeTheaterRequest({ lat, lon, radius }) {
 async function makeMovieDetailsRequest(movieID, moviePoster) {
   try {
     const imdbReq = { //initialize imbd request object
-      'url': `http://www.omdbapi.com/?apikey=5e37af8f&i=${movieID}`
+      'url': `http://www.omdbapi.com/?apikey= =${movieID}`
     };
 
     const imbdRes = await axios(imdbReq); //Makes request to imdb API and assigns it to response object
@@ -107,7 +107,7 @@ async function makeMovieListRequest({ movie }) {
     await connection.query(CLEAR_MOVIES);
 
     const imdbReq = { //initialize imbd request object
-      'url': `http://www.omdbapi.com/?apikey=5e37af8f&s=${movie}`
+      'url': `http://www.omdbapi.com/?apikey= =${movie}`
     };
 
     const imbdRes = await axios(imdbReq); //Makes request to imdb API and assigns it to response object
